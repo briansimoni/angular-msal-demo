@@ -17,6 +17,7 @@ type ProfileType = {
 })
 export class ProfileComponent implements OnInit {
   profile!: ProfileType;
+  weather!: Object;
 
   constructor(
     private http: HttpClient
@@ -24,6 +25,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getProfile();
+    this.getWeatherData();
   }
 
   getProfile() {
@@ -31,5 +33,19 @@ export class ProfileComponent implements OnInit {
       .subscribe(profile => {
         this.profile = profile;
       });
+  }
+
+  getWeatherData() {
+    this.http.get('http://localhost:5000/weatherforecast')
+    .subscribe(
+    (weather) => {
+      alert(weather);
+      console.log(weather);
+      this.weather = weather;
+    },
+    (error) => {
+      console.log(error.message)
+    }
+    )
   }
 }

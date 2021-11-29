@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { RoleGuardService } from './role-guard.service';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,14 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [MsalGuard, RoleGuardService],
+    data: {
+      expectedRole: 'fart'
+    }
+  }
 ];
 
 const isIframe = window !== window.parent && !window.opener;
